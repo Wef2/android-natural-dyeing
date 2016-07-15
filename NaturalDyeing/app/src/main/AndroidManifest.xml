@@ -15,6 +15,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MeaningActivity" />
+        <activity android:name=".HistoryActivity" />
+        <activity android:name=".ColorActivity"></activity>
     </application>
 
 </manifest>
