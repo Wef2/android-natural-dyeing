@@ -15,9 +15,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MeaningActivity" />
-        <activity android:name=".HistoryActivity" />
-        <activity android:name=".ColorActivity"></activity>
+        <activity
+            android:name=".MeaningActivity"
+            android:label="@string/activity_meaning" />
+        <activity
+            android:name=".HistoryActivity"
+            android:label="@string/activity_history" />
+        <activity android:name=".ColorListActivity" />
+        <activity android:name=".FabricActivity" />
+        <activity android:name=".ClothActivity" />
+        <activity android:name=".NaturalColorActivity"></activity>
     </application>
 
 </manifest>

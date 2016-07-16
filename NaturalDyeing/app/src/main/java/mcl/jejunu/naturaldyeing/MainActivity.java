@@ -18,6 +18,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         meaningButton = (Button) findViewById(R.id.meaning_button);
         historyButton = (Button) findViewById(R.id.history_button);
         colorButton = (Button) findViewById(R.id.color_button);
+
+        meaningButton.setOnClickListener(this);
+        historyButton.setOnClickListener(this);
+        colorButton.setOnClickListener(this);
     }
 
     @Override
@@ -30,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(MainActivity.this, HistoryActivity.class));
                 break;
             case R.id.color_button:
-                startActivity(new Intent(MainActivity.this, ColorActivity.class));
+                startActivity(new Intent(MainActivity.this, ColorListActivity.class));
                 break;
         }
 

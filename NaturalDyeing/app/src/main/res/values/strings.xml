@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">NaturalDyeing</string>
+    <string name="app_name">천연염색</string>
+    <string name="activity_meaning">천연염색의 의의</string>
+    <string name="activity_history">천연염색의 역사</string>
 </resources>
