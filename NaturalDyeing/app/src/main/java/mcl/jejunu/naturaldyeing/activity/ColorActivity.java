@@ -1,13 +1,15 @@
-package mcl.jejunu.naturaldyeing;
+package mcl.jejunu.naturaldyeing.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class HistoryActivity extends AppCompatActivity {
+import mcl.jejunu.naturaldyeing.R;
+
+public class ColorActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_history);
+        setContentView(R.layout.activity_natural_color);
     }
 }

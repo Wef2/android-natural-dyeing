@@ -1,7 +1,9 @@
-package mcl.jejunu.naturaldyeing;
+package mcl.jejunu.naturaldyeing.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import mcl.jejunu.naturaldyeing.R;
 
 public class FabricActivity extends AppCompatActivity {
 

@@ -1,10 +1,12 @@
-package mcl.jejunu.naturaldyeing;
+package mcl.jejunu.naturaldyeing.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+
+import mcl.jejunu.naturaldyeing.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -34,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(MainActivity.this, HistoryActivity.class));
                 break;
             case R.id.color_button:
-                startActivity(new Intent(MainActivity.this, ColorListActivity.class));
+                startActivity(new Intent(MainActivity.this, MaterialListActivity.class));
                 break;
         }
 

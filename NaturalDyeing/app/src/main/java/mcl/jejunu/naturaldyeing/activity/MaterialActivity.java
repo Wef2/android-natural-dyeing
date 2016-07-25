@@ -1,13 +1,15 @@
-package mcl.jejunu.naturaldyeing;
+package mcl.jejunu.naturaldyeing.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MeaningActivity extends AppCompatActivity {
+import mcl.jejunu.naturaldyeing.R;
+
+public class MaterialActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_meaning);
+        setContentView(R.layout.activity_material);
     }
 }

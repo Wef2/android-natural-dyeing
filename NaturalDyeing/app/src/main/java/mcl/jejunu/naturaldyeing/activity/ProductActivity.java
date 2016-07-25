@@ -1,9 +1,11 @@
-package mcl.jejunu.naturaldyeing;
+package mcl.jejunu.naturaldyeing.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class ClothActivity extends AppCompatActivity {
+import mcl.jejunu.naturaldyeing.R;
+
+public class ProductActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
