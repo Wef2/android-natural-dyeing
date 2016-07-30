@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(MainActivity.this, HistoryActivity.class));
                 break;
             case R.id.color_button:
-                startActivity(new Intent(MainActivity.this, MaterialListActivity.class));
+                startActivity(new Intent(MainActivity.this, ResourceListActivity.class));
                 break;
         }
 

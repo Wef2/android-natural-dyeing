@@ -6,7 +6,7 @@ import io.realm.annotations.PrimaryKey;
 /**
  * Created by Kim on 2016-07-25.
  */
-public class Fabric extends RealmObject{
+public class Resource extends RealmObject {
 
     @PrimaryKey
     private int id;

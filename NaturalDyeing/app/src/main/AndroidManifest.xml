@@ -21,11 +21,11 @@
         <activity
             android:name=".activity.HistoryActivity"
             android:label="@string/activity_history" />
-        <activity android:name=".activity.MaterialListActivity" />
+        <activity android:name=".activity.ResourceListActivity" />
         <activity android:name=".activity.FabricActivity" />
         <activity android:name=".activity.ProductActivity" />
         <activity android:name=".activity.ColorActivity" />
-        <activity android:name=".activity.MaterialActivity"></activity>
+        <activity android:name=".activity.ResourceActivity"></activity>
     </application>
 
 </manifest>

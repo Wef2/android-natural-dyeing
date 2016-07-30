@@ -5,11 +5,11 @@ import android.os.Bundle;
 
 import mcl.jejunu.naturaldyeing.R;
 
-public class MaterialActivity extends AppCompatActivity {
+public class ResourceListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_material);
+        setContentView(R.layout.activity_color);
     }
 }
