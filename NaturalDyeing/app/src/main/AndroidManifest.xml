@@ -25,7 +25,8 @@
         <activity android:name=".activity.FabricActivity" />
         <activity android:name=".activity.ProductActivity" />
         <activity android:name=".activity.ColorActivity" />
-        <activity android:name=".activity.ResourceActivity"></activity>
+        <activity android:name=".activity.ResourceActivity" />
+        <activity android:name=".activity.ColorListActivity"></activity>
     </application>
 
 </manifest>

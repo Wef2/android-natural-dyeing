@@ -10,44 +10,66 @@
     tools:context=".activity.MainActivity">
 
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="아름다운 천연염색"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/textView2"
-        android:layout_marginTop="80dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="32dp"
+        android:layout_marginTop="32dp"
+        android:text="아름다운 천연염색"
+        android:textSize="40dp" />
 
     <Button
         android:id="@+id/meaning_button"
-        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="의의"
         android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="52dp" />
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_button"
+        android:text="천연염색의 의의"
+        android:textColor="@android:color/white"
+        android:textSize="25dp" />
 
     <Button
         android:id="@+id/history_button"
-        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="역사"
         android:layout_below="@+id/meaning_button"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_button"
+        android:text="천연염색의 역사"
+        android:textColor="@android:color/white"
+        android:textSize="25dp" />
 
     <Button
-        style="@style/Widget.AppCompat.Button.Colored"
+        android:id="@+id/resource_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/history_button"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_button"
+        android:text="천연염색재료"
+        android:textColor="@android:color/white"
+        android:textSize="25dp" />
+
+    <Button
         android:id="@+id/color_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/resource_button"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
-        android:text="색조"
-        android:layout_below="@+id/history_button"
-        android:layout_centerHorizontal="true" />
+        android:layout_margin="10dp"
+        android:background="@drawable/rounded_button"
+        android:text="색"
+        android:textColor="@android:color/white"
+        android:textSize="25dp" />
 
 </RelativeLayout>

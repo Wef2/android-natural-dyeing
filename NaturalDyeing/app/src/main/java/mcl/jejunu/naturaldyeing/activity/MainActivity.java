@@ -10,7 +10,7 @@ import mcl.jejunu.naturaldyeing.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button meaningButton, historyButton, colorButton;
+    private Button meaningButton, historyButton, resourceButton, colorButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,10 +19,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         meaningButton = (Button) findViewById(R.id.meaning_button);
         historyButton = (Button) findViewById(R.id.history_button);
+        resourceButton = (Button) findViewById(R.id.resource_button);
         colorButton = (Button) findViewById(R.id.color_button);
 
         meaningButton.setOnClickListener(this);
         historyButton.setOnClickListener(this);
+        resourceButton.setOnClickListener(this);
         colorButton.setOnClickListener(this);
     }
 
@@ -35,8 +37,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.history_button:
                 startActivity(new Intent(MainActivity.this, HistoryActivity.class));
                 break;
-            case R.id.color_button:
+            case R.id.resource_button:
                 startActivity(new Intent(MainActivity.this, ResourceListActivity.class));
+                break;
+            case R.id.color_button:
+                startActivity(new Intent(MainActivity.this, ColorListActivity.class));
                 break;
         }
 
