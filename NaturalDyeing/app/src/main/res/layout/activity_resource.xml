@@ -27,8 +27,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="16dp"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/textView"
@@ -49,13 +49,13 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:textSize="16dp"
-            android:textColor="#222222"
             android:text="미역과의 갈조류, 제주도를 비롯한 우리나라 남해안에 자생하며 황산화성, 미백, 황노화 기능성이 보고됨."
-            android:id="@+id/textView4" />
+            android:textColor="#222222"
+            android:textSize="16dp" />
 
         <LinearLayout
             android:id="@+id/color_layout"
@@ -65,16 +65,16 @@
             android:orientation="horizontal">
 
             <Button
-                android:background="@drawable/circular_button"
                 android:id="@+id/color_button"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_marginRight="8dp"/>
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginRight="8dp"
+                android:background="@drawable/circle_button" />
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="색 정보"/>
+                android:layout_height="wrap_content"
+                android:text="색 정보" />
 
         </LinearLayout>
 
@@ -88,7 +88,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="원단 정보"/>
+                android:text="원단 정보" />
 
         </LinearLayout>
 
