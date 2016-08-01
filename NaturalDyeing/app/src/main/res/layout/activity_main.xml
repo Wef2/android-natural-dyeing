@@ -55,7 +55,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_margin="10dp"
         android:background="@drawable/rounded_button"
-        android:text="천연염색재료"
+        android:text="천연염색 자원"
         android:textColor="@android:color/white"
         android:textSize="25dp" />
 
@@ -68,7 +68,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_margin="10dp"
         android:background="@drawable/rounded_button"
-        android:text="색"
+        android:text="색채"
         android:textColor="@android:color/white"
         android:textSize="25dp" />
 

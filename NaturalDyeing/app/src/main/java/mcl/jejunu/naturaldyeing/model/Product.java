@@ -13,6 +13,9 @@ public class Product extends RealmObject {
     private String name;
     private String description;
 
+    // Foreign Key
+    private int fabricId;
+
     public int getId() {
         return id;
     }
@@ -35,5 +38,13 @@ public class Product extends RealmObject {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getFabricId() {
+        return fabricId;
+    }
+
+    public void setFabricId(int fabricId) {
+        this.fabricId = fabricId;
     }
 }

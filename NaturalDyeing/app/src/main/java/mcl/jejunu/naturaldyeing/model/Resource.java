@@ -13,6 +13,9 @@ public class Resource extends RealmObject {
     private String name;
     private String description;
 
+    // Foreign Key
+    private int colorId;
+
     public int getId() {
         return id;
     }
@@ -36,4 +39,13 @@ public class Resource extends RealmObject {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public int getColorId() {
+        return colorId;
+    }
+
+    public void setColorId(int colorId) {
+        this.colorId = colorId;
+    }
+
 }

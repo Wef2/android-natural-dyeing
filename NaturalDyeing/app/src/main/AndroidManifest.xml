@@ -21,7 +21,8 @@
         <activity
             android:name=".activity.HistoryActivity"
             android:label="@string/activity_history" />
-        <activity android:name=".activity.ResourceListActivity" />
+        <activity android:name=".activity.ResourceListActivity"
+            android:label="@string/activity_resource"/>
         <activity android:name=".activity.FabricActivity" />
         <activity android:name=".activity.ProductActivity" />
         <activity android:name=".activity.ColorActivity" />

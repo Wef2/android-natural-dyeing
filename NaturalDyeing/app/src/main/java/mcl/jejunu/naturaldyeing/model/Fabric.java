@@ -13,6 +13,9 @@ public class Fabric extends RealmObject{
     private String name;
     private String description;
 
+    // Foreign Key
+    private int resourceId;
+
     public int getId() {
         return id;
     }
@@ -35,5 +38,13 @@ public class Fabric extends RealmObject{
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getResourceId() {
+        return resourceId;
+    }
+
+    public void setResourceId(int resourceId) {
+        this.resourceId = resourceId;
     }
 }

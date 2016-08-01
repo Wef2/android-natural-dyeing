@@ -13,6 +13,7 @@ public class Color extends RealmObject {
     private String name;
     private String rgb;
     private String lab;
+    private String hvc;
 
     public int getId() {
         return id;
@@ -44,5 +45,13 @@ public class Color extends RealmObject {
 
     public void setLab(String lab) {
         this.lab = lab;
+    }
+
+    public String getHvc() {
+        return hvc;
+    }
+
+    public void setHvc(String hvc) {
+        this.hvc = hvc;
     }
 }
