@@ -13,7 +13,7 @@ import mcl.jejunu.naturaldyeing.model.Resource;
 
 public class ResourceActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView nameText, scientificNameText;
+    private TextView nameText, scientificNameText, descriptionText;
     private LinearLayout colorLayout, fabricLayout;
 
     private Long resourceId;
@@ -35,11 +35,13 @@ public class ResourceActivity extends AppCompatActivity implements View.OnClickL
 
         nameText = (TextView) findViewById(R.id.name_text);
         scientificNameText = (TextView) findViewById(R.id.scientific_name_text);
+        descriptionText = (TextView) findViewById(R.id.description_text);
         colorLayout = (LinearLayout) findViewById(R.id.color_layout);
         fabricLayout = (LinearLayout) findViewById(R.id.fabric_layout);
 
         nameText.setText(resource.getName());
         scientificNameText.setText(resource.getScientificName());
+        descriptionText.setText(resource.getDescription());
 
         colorLayout.setOnClickListener(this);
         fabricLayout.setOnClickListener(this);
@@ -49,11 +51,15 @@ public class ResourceActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.color_layout:
-                startActivity(new Intent(ResourceActivity.this, ColorActivity.class));
+                Intent intent = new Intent(ResourceActivity.this, ColorActivity.class);
+                intent.putExtra("colorId", resourceId);
+                startActivity(intent);
                 break;
 
             case R.id.fabric_layout:
-                startActivity(new Intent(ResourceActivity.this, FabricActivity.class));
+                Intent intent2 = new Intent(ResourceActivity.this, FabricActivity.class);
+                intent2.putExtra("fabricId", resourceId);
+                startActivity(intent2);
                 break;
         }
     }

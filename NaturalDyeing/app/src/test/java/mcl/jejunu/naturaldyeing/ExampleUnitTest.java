@@ -6,6 +6,8 @@ import org.junit.Test;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import dalvik.annotation.TestTargetClass;
+
 import static org.junit.Assert.*;
 
 /**
@@ -19,5 +21,12 @@ public class ExampleUnitTest {
             integer.getAndIncrement();
         }
         Assert.assertEquals(integer.intValue(), 5);
+    }
+
+    @Test
+    public void split(){
+        String str = "10 20 30";
+        String[] split = str.split(" ");
+        Assert.assertEquals(split[0], String.valueOf(10));
     }
 }

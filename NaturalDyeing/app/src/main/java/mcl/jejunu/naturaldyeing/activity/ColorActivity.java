@@ -1,6 +1,7 @@
 package mcl.jejunu.naturaldyeing.activity;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
@@ -30,7 +31,14 @@ public class ColorActivity extends AppCompatActivity {
         colorId = intent.getLongExtra("colorId", 0);
         color = realm.where(Color.class).equalTo("id", colorId).findFirst();
 
+        String[] colorValues = color.getRgb().split(" ");
+        int r = Integer.parseInt(colorValues[0]);
+        int g = Integer.parseInt(colorValues[1]);
+        int b = Integer.parseInt(colorValues[2]);
+
         circleButton = (Button) findViewById(R.id.circle_button);
+        circleButton.setBackgroundColor(android.graphics.Color.rgb(r,g, b));
+
         nameText = (TextView) findViewById(R.id.name_text);
         rgbText = (TextView) findViewById(R.id.rgb_text);
         hexText = (TextView) findViewById(R.id.hex_text);
