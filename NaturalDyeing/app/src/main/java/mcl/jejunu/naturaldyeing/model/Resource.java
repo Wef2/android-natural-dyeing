@@ -8,19 +8,19 @@ import io.realm.annotations.PrimaryKey;
  */
 public class Resource extends RealmObject {
 
-    @PrimaryKey
-    private int id;
+    private Long id;
     private String name;
+    private String scientificName;
     private String description;
 
     // Foreign Key
     private int colorId;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -30,6 +30,14 @@ public class Resource extends RealmObject {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getScientificName() {
+        return scientificName;
+    }
+
+    public void setScientificName(String scientificName) {
+        this.scientificName = scientificName;
     }
 
     public String getDescription() {

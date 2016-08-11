@@ -8,19 +8,18 @@ import io.realm.annotations.PrimaryKey;
  */
 public class Product extends RealmObject {
 
-    @PrimaryKey
-    private int id;
+    private Long id;
     private String name;
     private String description;
 
     // Foreign Key
     private int fabricId;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

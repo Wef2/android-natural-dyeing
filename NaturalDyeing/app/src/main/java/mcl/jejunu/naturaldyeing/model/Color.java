@@ -8,18 +8,18 @@ import io.realm.annotations.PrimaryKey;
  */
 public class Color extends RealmObject {
 
-    @PrimaryKey
-    private int id;
+    private Long id;
     private String name;
     private String rgb;
     private String lab;
     private String hvc;
+    private String hexhtml;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -53,5 +53,13 @@ public class Color extends RealmObject {
 
     public void setHvc(String hvc) {
         this.hvc = hvc;
+    }
+
+    public String getHexhtml() {
+        return hexhtml;
+    }
+
+    public void setHexhtml(String hexhtml) {
+        this.hexhtml = hexhtml;
     }
 }

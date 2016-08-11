@@ -1,6 +1,10 @@
 package mcl.jejunu.naturaldyeing;
 
+import junit.framework.Assert;
+
 import org.junit.Test;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.Assert.*;
 
@@ -9,7 +13,11 @@ import static org.junit.Assert.*;
  */
 public class ExampleUnitTest {
     @Test
-    public void addition_isCorrect() throws Exception {
-        assertEquals(4, 2 + 2);
+    public void autoIncrementTest(){
+        AtomicInteger integer = new AtomicInteger(0);
+        for(int i = 0; i < 5; i++){
+            integer.getAndIncrement();
+        }
+        Assert.assertEquals(integer.intValue(), 5);
     }
 }
