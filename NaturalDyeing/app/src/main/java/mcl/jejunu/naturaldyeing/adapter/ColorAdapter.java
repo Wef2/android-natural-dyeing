@@ -9,24 +9,24 @@ import android.widget.TextView;
 
 import io.realm.RealmResults;
 import mcl.jejunu.naturaldyeing.R;
-import mcl.jejunu.naturaldyeing.model.Resource;
+import mcl.jejunu.naturaldyeing.model.Color;
 
 /**
- * Created by neo-202 on 2016-08-11.
+ * Created by BK on 2016-08-11.
  */
-public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.ViewHolder> {
+public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ViewHolder> {
 
-    private RealmResults<Resource> resources;
+    private RealmResults<Color> colors;
     private View.OnClickListener listener;
 
-    public ResourceAdapter(RealmResults<Resource> resources, View.OnClickListener listener) {
-        this.resources = resources;
+    public ColorAdapter(RealmResults<Color> colors, View.OnClickListener listener) {
+        this.colors = colors;
         this.listener = listener;
     }
 
     @Override
-    public ResourceAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_resource, parent, false);
+    public ColorAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_color, parent, false);
         ViewHolder vh = new ViewHolder(v);
         return vh;
     }
@@ -34,27 +34,24 @@ public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.cardView.setOnClickListener(listener);
-        holder.cardView.setTag(resources.get(position));
-        holder.nameText.setText(resources.get(position).getName());
-        holder.scientificNameText.setText(resources.get(position).getScientificName());
+        holder.cardView.setTag(colors.get(position));
+        holder.nameText.setText(colors.get(position).getName());
     }
 
     @Override
     public int getItemCount() {
-        return resources.size();
+        return colors.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public CardView cardView;
         public TextView nameText;
-        public TextView scientificNameText;
 
         public ViewHolder(View v) {
             super(v);
             cardView = (CardView) v.findViewById(R.id.card_view);
             nameText = (TextView) v.findViewById(R.id.name_text);
-            scientificNameText = (TextView) v.findViewById(R.id.scientific_name_text);
         }
     }
 

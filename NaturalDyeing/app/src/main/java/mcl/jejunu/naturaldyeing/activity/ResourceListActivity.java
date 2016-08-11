@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -37,13 +38,15 @@ public class ResourceListActivity extends AppCompatActivity implements View.OnCl
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new ResourceAdapter(resources);
+        adapter = new ResourceAdapter(resources, this);
         recyclerView.setAdapter(adapter);
     }
 
     @Override
     public void onClick(View v) {
         Resource resource = (Resource) v.getTag();
-        startActivity(new Intent(ResourceListActivity.this, ResourceActivity.class));
+        Intent intent = new Intent(ResourceListActivity.this, ResourceActivity.class);
+        intent.putExtra("resourceId", resource.getId());
+        startActivity(intent);
     }
 }
