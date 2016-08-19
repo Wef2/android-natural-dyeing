@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import io.realm.Realm;
@@ -13,6 +14,7 @@ import mcl.jejunu.naturaldyeing.model.Fabric;
 
 public class FabricActivity extends AppCompatActivity {
 
+    private ImageView fabricImage;
     private TextView nameText, descriptionText;
     private Button productButton;
 
@@ -28,12 +30,17 @@ public class FabricActivity extends AppCompatActivity {
         Intent intent = getIntent();
         fabricId = intent.getLongExtra("fabricId", 0);
 
+        realm = Realm.getDefaultInstance();
+        fabric = realm.where(Fabric.class).equalTo("id", fabricId).findFirst();
+
+        fabricImage = (ImageView) findViewById(R.id.fabric_image);
         nameText = (TextView) findViewById(R.id.name_text);
         descriptionText = (TextView) findViewById(R.id.description_text);
         productButton = (Button) findViewById(R.id.product_button);
 
-        realm = Realm.getDefaultInstance();
-        fabric = realm.where(Fabric.class).equalTo("id", fabricId).findFirst();
+        String fabricImageName = "fabric_" + fabricId;
+        int imageId = getResources().getIdentifier(fabricImageName, "drawable", getPackageName());
+        fabricImage.setImageResource(imageId);
 
         nameText.setText(fabric.getName());
         descriptionText.setText(fabric.getDescription());
