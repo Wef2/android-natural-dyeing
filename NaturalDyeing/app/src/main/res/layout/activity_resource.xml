@@ -58,32 +58,25 @@
             android:textSize="16dp" />
 
         <LinearLayout
-            android:id="@+id/color_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:text="색 정보" />
-
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/fabric_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <TextView
+            <Button
+                android:layout_gravity="center"
+                android:id="@+id/color_button"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:textSize="20dp"
-                android:text="원단 정보" />
+                android:layout_height="wrap_content"
+                android:text="색채 정보"/>
+
+            <Button
+                android:layout_gravity="center"
+                android:id="@+id/fabric_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="원단 정보"/>
 
         </LinearLayout>
 

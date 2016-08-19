@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -16,7 +17,7 @@ public class ResourceActivity extends AppCompatActivity implements View.OnClickL
 
     private ImageView resourceImage;
     private TextView nameText, scientificNameText, descriptionText;
-    private LinearLayout colorLayout, fabricLayout;
+    private Button colorButton, fabricButton;
 
     private Long resourceId;
     private Resource resource;
@@ -39,8 +40,8 @@ public class ResourceActivity extends AppCompatActivity implements View.OnClickL
         nameText = (TextView) findViewById(R.id.name_text);
         scientificNameText = (TextView) findViewById(R.id.scientific_name_text);
         descriptionText = (TextView) findViewById(R.id.description_text);
-        colorLayout = (LinearLayout) findViewById(R.id.color_layout);
-        fabricLayout = (LinearLayout) findViewById(R.id.fabric_layout);
+        colorButton = (Button) findViewById(R.id.color_button);
+        fabricButton = (Button) findViewById(R.id.fabric_button);
 
         String resourceImageName = "resource_" + resourceId;
         int imageId = getResources().getIdentifier(resourceImageName, "drawable", getPackageName());
@@ -50,20 +51,20 @@ public class ResourceActivity extends AppCompatActivity implements View.OnClickL
         scientificNameText.setText(resource.getScientificName());
         descriptionText.setText(resource.getDescription());
 
-        colorLayout.setOnClickListener(this);
-        fabricLayout.setOnClickListener(this);
+        colorButton.setOnClickListener(this);
+        fabricButton.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.color_layout:
+            case R.id.color_button:
                 Intent intent = new Intent(ResourceActivity.this, ColorActivity.class);
                 intent.putExtra("colorId", resourceId);
                 startActivity(intent);
                 break;
 
-            case R.id.fabric_layout:
+            case R.id.fabric_button:
                 Intent intent2 = new Intent(ResourceActivity.this, FabricActivity.class);
                 intent2.putExtra("fabricId", resourceId);
                 startActivity(intent2);

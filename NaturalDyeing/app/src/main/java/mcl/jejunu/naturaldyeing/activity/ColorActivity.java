@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -13,7 +14,7 @@ import mcl.jejunu.naturaldyeing.model.Color;
 
 public class ColorActivity extends AppCompatActivity {
 
-    private Button circleButton;
+    private Button circleButton, resourceButton;
     private TextView nameText, rgbText, hexText, hvcText, labText;
 
     private Realm realm;
@@ -44,11 +45,20 @@ public class ColorActivity extends AppCompatActivity {
         hexText = (TextView) findViewById(R.id.hex_text);
         hvcText = (TextView) findViewById(R.id.hvc_text);
         labText = (TextView) findViewById(R.id.lab_text);
+        resourceButton = (Button) findViewById(R.id.resource_button);
 
         nameText.setText(color.getName());
         rgbText.setText(color.getRgb());
         hexText.setText(color.getHexhtml());
         hvcText.setText(color.getHvc());
         labText.setText(color.getLab());
+        resourceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ColorActivity.this, ResourceActivity.class);
+                intent.putExtra("resourceId", colorId);
+                startActivity(intent);
+            }
+        });
     }
 }
