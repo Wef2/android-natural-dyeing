@@ -22,13 +22,23 @@
         <activity
             android:name=".activity.HistoryActivity"
             android:label="@string/activity_history" />
-        <activity android:name=".activity.ResourceListActivity"
-            android:label="@string/activity_resource"/>
+        <activity
+            android:name=".activity.ResourceListActivity"
+            android:label="@string/activity_resource" />
         <activity android:name=".activity.FabricActivity" />
         <activity android:name=".activity.ProductActivity" />
         <activity android:name=".activity.ColorActivity" />
         <activity android:name=".activity.ResourceActivity" />
-        <activity android:name=".activity.ColorListActivity"></activity>
+        <activity android:name=".activity.ColorListActivity" />
+        <activity android:name=".activity.SearchResultsActivity"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
     </application>
 
 </manifest>

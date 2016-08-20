@@ -3,4 +3,9 @@
     <string name="activity_meaning">천연염색의 의의</string>
     <string name="activity_history">천연염색의 역사</string>
     <string name="activity_resource">천연염색 자원</string>
+
+    <string name="search_hint">검색</string>
+    <string name="search_title">검색</string>
+
+    <string name="action_settings">설정</string>
 </resources>

@@ -123,9 +123,9 @@
 
     <Button
         android:id="@+id/resource_button"
-        android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="천연염색 자원 정보"/>
+        android:layout_gravity="center"
+        android:text="천연염색 자원 정보" />
 
 </LinearLayout>
