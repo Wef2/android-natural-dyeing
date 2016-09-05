@@ -1,12 +1,17 @@
 package mcl.jejunu.naturaldyeing.activity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
 
 import mcl.jejunu.naturaldyeing.R;
 
@@ -34,7 +39,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.meaning_button:
-                startActivity(new Intent(MainActivity.this, MeaningActivity.class));
+                new TestRequestTask().execute();
+
+//                startActivity(new Intent(MainActivity.this, MeaningActivity.class));
                 break;
             case R.id.history_button:
                 startActivity(new Intent(MainActivity.this, HistoryActivity.class));
@@ -46,6 +53,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(MainActivity.this, ColorListActivity.class));
                 break;
         }
-
     }
+
+    private class TestRequestTask extends AsyncTask<Void, Void, ResponseEntity<String>> {
+
+        @Override
+        protected ResponseEntity<String> doInBackground(Void... params) {
+            try {
+                final String url = "http://rest-service.guides.spring.io/greeting";
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+                ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
+                return responseEntity;
+            } catch (Exception e) {
+                Log.e("MainActivity", e.getMessage(), e);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(ResponseEntity<String> responseEntity) {
+            Toast.makeText(MainActivity.this, responseEntity.getBody(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }
