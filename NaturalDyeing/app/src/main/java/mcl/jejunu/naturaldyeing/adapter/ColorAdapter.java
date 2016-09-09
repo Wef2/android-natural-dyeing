@@ -7,6 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.List;
+
 import io.realm.RealmResults;
 import mcl.jejunu.naturaldyeing.R;
 import mcl.jejunu.naturaldyeing.model.Color;
@@ -16,10 +18,10 @@ import mcl.jejunu.naturaldyeing.model.Color;
  */
 public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ViewHolder> {
 
-    private RealmResults<Color> colors;
+    private List<Color> colors;
     private View.OnClickListener listener;
 
-    public ColorAdapter(RealmResults<Color> colors, View.OnClickListener listener) {
+    public ColorAdapter(List<Color> colors, View.OnClickListener listener) {
         this.colors = colors;
         this.listener = listener;
     }

@@ -72,15 +72,6 @@ public class SearchResultsActivity extends AppCompatActivity implements SearchVi
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        RealmResults<Resource> resourceRealmResults = realm.where(Resource.class).contains("name", query).or().contains("scientificName", query, Case.INSENSITIVE).findAll();
-        RealmResults<Color> colorRealmResults = realm.where(Color.class).contains("name", query, Case.INSENSITIVE).findAll();
-
-        List<Resource> resources = realm.copyFromRealm(resourceRealmResults);
-        List<Color> colors = realm.copyFromRealm(colorRealmResults);
-
-        System.out.println(colors);
-
-        adapter.replaceWith(resources, colors, query);
         return false;
     }
 

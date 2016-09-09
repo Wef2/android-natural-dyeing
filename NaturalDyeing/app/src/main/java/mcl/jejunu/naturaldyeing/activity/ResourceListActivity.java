@@ -1,17 +1,25 @@
 package mcl.jejunu.naturaldyeing.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -25,17 +33,14 @@ public class ResourceListActivity extends AppCompatActivity implements View.OnCl
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
-    private RealmResults<Resource> resources;
-
-    private Realm realm;
+    private List<Resource> resources;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resource_list);
 
-        realm = Realm.getDefaultInstance();
-        resources = realm.where(Resource.class).findAll();
+        resources = new ArrayList<>();
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -43,6 +48,8 @@ public class ResourceListActivity extends AppCompatActivity implements View.OnCl
         recyclerView.setLayoutManager(layoutManager);
         adapter = new ResourceAdapter(resources, this);
         recyclerView.setAdapter(adapter);
+
+        new ResourceListRequestTask().execute();
     }
 
     @Override
@@ -68,6 +75,29 @@ public class ResourceListActivity extends AppCompatActivity implements View.OnCl
                 startActivity(intent);
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private class ResourceListRequestTask extends AsyncTask<Void, Void, List<Resource>> {
+
+        @Override
+        protected List<Resource> doInBackground(Void... params) {
+            try {
+                final String url = "http://ec2-52-78-112-241.ap-northeast-2.compute.amazonaws.com/select_resource_list.php";
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+                Resource[] resources = restTemplate.getForObject(url, Resource[].class);
+                return Arrays.asList(resources);
+            } catch (Exception e) {
+                Log.e("MainActivity", e.getMessage(), e);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(List<Resource> results) {
+            resources.addAll(results);
+            adapter.notifyDataSetChanged();
         }
     }
 

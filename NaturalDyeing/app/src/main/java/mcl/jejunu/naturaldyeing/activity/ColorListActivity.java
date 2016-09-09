@@ -1,38 +1,43 @@
 package mcl.jejunu.naturaldyeing.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-import io.realm.Realm;
-import io.realm.RealmResults;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import mcl.jejunu.naturaldyeing.R;
 import mcl.jejunu.naturaldyeing.adapter.ColorAdapter;
 import mcl.jejunu.naturaldyeing.model.Color;
 
-public class ColorListActivity extends AppCompatActivity implements View.OnClickListener{
+public class ColorListActivity extends AppCompatActivity implements View.OnClickListener {
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
-    private RealmResults<Color> colors;
+    private List<Color> colors;
 
-    private Realm realm;
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_color_list);
 
-        realm = Realm.getDefaultInstance();
-        colors = realm.where(Color.class).findAll();
+        colors = new ArrayList<>();
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -40,6 +45,8 @@ public class ColorListActivity extends AppCompatActivity implements View.OnClick
         recyclerView.setLayoutManager(layoutManager);
         adapter = new ColorAdapter(colors, this);
         recyclerView.setAdapter(adapter);
+
+        new ColorListRequestTask().execute();
     }
 
     @Override
@@ -65,6 +72,29 @@ public class ColorListActivity extends AppCompatActivity implements View.OnClick
                 startActivity(intent);
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private class ColorListRequestTask extends AsyncTask<Void, Void, List<Color>> {
+
+        @Override
+        protected List<Color> doInBackground(Void... params) {
+            try {
+                final String url = "http://ec2-52-78-112-241.ap-northeast-2.compute.amazonaws.com/select_color_list.php";
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+                Color[] colors = restTemplate.getForObject(url, Color[].class);
+                return Arrays.asList(colors);
+            } catch (Exception e) {
+                Log.e("MainActivity", e.getMessage(), e);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(List<Color> results) {
+            colors.addAll(results);
+            adapter.notifyDataSetChanged();
         }
     }
 

@@ -1,12 +1,9 @@
 package mcl.jejunu.naturaldyeing.model;
 
-import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
-
 /**
  * Created by Kim on 2016-07-25.
  */
-public class Color extends RealmObject {
+public class Color {
 
     private Long id;
     private String name;

@@ -7,7 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import io.realm.RealmResults;
+import java.util.List;
+
 import mcl.jejunu.naturaldyeing.R;
 import mcl.jejunu.naturaldyeing.model.Resource;
 
@@ -16,10 +17,10 @@ import mcl.jejunu.naturaldyeing.model.Resource;
  */
 public class ResourceAdapter extends RecyclerView.Adapter<ResourceAdapter.ViewHolder> {
 
-    private RealmResults<Resource> resources;
+    private List<Resource> resources;
     private View.OnClickListener listener;
 
-    public ResourceAdapter(RealmResults<Resource> resources, View.OnClickListener listener) {
+    public ResourceAdapter(List<Resource> resources, View.OnClickListener listener) {
         this.resources = resources;
         this.listener = listener;
     }

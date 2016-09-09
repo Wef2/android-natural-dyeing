@@ -1,18 +1,24 @@
 package mcl.jejunu.naturaldyeing.activity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import io.realm.Realm;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.Arrays;
+import java.util.List;
+
 import mcl.jejunu.naturaldyeing.R;
 import mcl.jejunu.naturaldyeing.model.Resource;
 
@@ -25,19 +31,13 @@ public class ResourceActivity extends AppCompatActivity implements View.OnClickL
     private Long resourceId;
     private Resource resource;
 
-    private Realm realm;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resource);
 
-        realm = Realm.getDefaultInstance();
-
         Intent intent = getIntent();
         resourceId = intent.getLongExtra("resourceId", 0);
-
-        resource = realm.where(Resource.class).equalTo("id", resourceId).findFirst();
 
         resourceImage = (ImageView) findViewById(R.id.resource_image);
         nameText = (TextView) findViewById(R.id.name_text);
@@ -50,12 +50,10 @@ public class ResourceActivity extends AppCompatActivity implements View.OnClickL
         int imageId = getResources().getIdentifier(resourceImageName, "drawable", getPackageName());
         resourceImage.setImageResource(imageId);
 
-        nameText.setText(resource.getName());
-        scientificNameText.setText(resource.getScientificName());
-        descriptionText.setText(resource.getDescription());
-
         colorButton.setOnClickListener(this);
         fabricButton.setOnClickListener(this);
+
+        new ResourceRequestTask().execute();
     }
 
     @Override
@@ -94,5 +92,28 @@ public class ResourceActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
+    private class ResourceRequestTask extends AsyncTask<Void, Void, Resource> {
+
+        @Override
+        protected Resource doInBackground(Void... params) {
+            try {
+                final String url = "http://ec2-52-78-112-241.ap-northeast-2.compute.amazonaws.com/select_resource.php?id=" + resourceId;
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+                Resource resource = restTemplate.getForObject(url, Resource.class);
+                return resource;
+            } catch (Exception e) {
+                Log.e("MainActivity", e.getMessage(), e);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Resource resource) {
+            nameText.setText(resource.getName());
+            scientificNameText.setText(resource.getScientificName());
+            descriptionText.setText(resource.getDescription());
+        }
+    }
 
 }
