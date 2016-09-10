@@ -1,5 +1,6 @@
 package mcl.jejunu.naturaldyeing.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -26,6 +27,8 @@ public class ColorActivity extends AppCompatActivity {
     private Long colorId;
     private Color color;
 
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +52,12 @@ public class ColorActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setIndeterminate(false);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMessage("불러오는 중");
+        progressDialog.setCancelable(false);
 
         new ColorRequestTask().execute();
     }
@@ -74,9 +83,14 @@ public class ColorActivity extends AppCompatActivity {
     private class ColorRequestTask extends AsyncTask<Void, Void, Color> {
 
         @Override
+        protected void onPreExecute() {
+            progressDialog.show();
+        }
+
+        @Override
         protected Color doInBackground(Void... params) {
             try {
-                final String url = "http://ec2-52-78-112-241.ap-northeast-2.compute.amazonaws.com/select_color.php?id=" + colorId;
+                final String url = getString(R.string.server_url) + "/select_color.php?id=" + colorId;
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
                 Color color = restTemplate.getForObject(url, Color.class);
@@ -104,6 +118,8 @@ public class ColorActivity extends AppCompatActivity {
 
             circleButton = (Button) findViewById(R.id.circle_button);
             circleButton.setBackgroundColor(android.graphics.Color.rgb(r, g, b));
+
+            progressDialog.dismiss();
         }
     }
 

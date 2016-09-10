@@ -1,6 +1,9 @@
 package mcl.jejunu.naturaldyeing.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,16 +11,15 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-import io.realm.Realm;
+import java.io.InputStream;
+
 import mcl.jejunu.naturaldyeing.R;
-import mcl.jejunu.naturaldyeing.model.Color;
 import mcl.jejunu.naturaldyeing.model.Product;
 
 public class ProductActivity extends AppCompatActivity {
@@ -27,6 +29,8 @@ public class ProductActivity extends AppCompatActivity {
 
     private Long productId;
     private Product product;
+
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +44,11 @@ public class ProductActivity extends AppCompatActivity {
         nameText = (TextView) findViewById(R.id.name_text);
         descriptionText = (TextView) findViewById(R.id.description_text);
 
-        String productImageName = "product_" + productId;
-        int imageId = getResources().getIdentifier(productImageName, "drawable", getPackageName());
-        productImage.setImageResource(imageId);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setIndeterminate(false);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMessage("불러오는 중");
+        progressDialog.setCancelable(false);
 
         new ProductRequestTask().execute();
     }
@@ -69,9 +75,14 @@ public class ProductActivity extends AppCompatActivity {
     private class ProductRequestTask extends AsyncTask<Void, Void, Product> {
 
         @Override
+        protected void onPreExecute() {
+            progressDialog.show();
+        }
+
+        @Override
         protected Product doInBackground(Void... params) {
             try {
-                final String url = "http://ec2-52-78-112-241.ap-northeast-2.compute.amazonaws.com/select_product.php?id=" + productId;
+                final String url = getString(R.string.server_url) + "/select_product.php?id=" + productId;
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
                 Product product = restTemplate.getForObject(url, Product.class);
@@ -88,6 +99,34 @@ public class ProductActivity extends AppCompatActivity {
 
             nameText.setText(product.getName());
             descriptionText.setText(product.getDescription());
+
+            new ImageTask(productImage).execute();
+        }
+    }
+
+    private class ImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView imageView;
+
+        public ImageTask(ImageView imageView) {
+            this.imageView = imageView;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            final String url = getString(R.string.storage_url);
+            Bitmap bitmap = null;
+            try {
+                InputStream in = new java.net.URL(url + product.getImage()).openStream();
+                bitmap = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return bitmap;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            imageView.setImageBitmap(result);
+            progressDialog.dismiss();
         }
     }
 

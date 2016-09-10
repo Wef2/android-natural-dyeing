@@ -1,19 +1,16 @@
 package mcl.jejunu.naturaldyeing.model;
 
 import io.realm.RealmObject;
-import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by Kim on 2016-07-25.
  */
-public class Fabric extends RealmObject{
+public class Fabric extends RealmObject {
 
     private Long id;
     private String name;
     private String description;
-
-    // Foreign Key
-    private int resourceId;
+    private String image;
 
     public Long getId() {
         return id;
@@ -39,11 +36,11 @@ public class Fabric extends RealmObject{
         this.description = description;
     }
 
-    public int getResourceId() {
-        return resourceId;
+    public String getImage() {
+        return image;
     }
 
-    public void setResourceId(int resourceId) {
-        this.resourceId = resourceId;
+    public void setImage(String image) {
+        this.image = image;
     }
 }

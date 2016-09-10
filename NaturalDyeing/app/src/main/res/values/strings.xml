@@ -8,4 +8,7 @@
     <string name="search_title">검색</string>
 
     <string name="action_settings">설정</string>
+
+    <string name="server_url">http://ec2-52-78-112-241.ap-northeast-2.compute.amazonaws.com</string>
+    <string name="storage_url">https://s3.ap-northeast-2.amazonaws.com/naturaldyeing/</string>
 </resources>

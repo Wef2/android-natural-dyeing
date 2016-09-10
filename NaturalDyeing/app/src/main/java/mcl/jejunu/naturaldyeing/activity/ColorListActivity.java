@@ -80,7 +80,7 @@ public class ColorListActivity extends AppCompatActivity implements View.OnClick
         @Override
         protected List<Color> doInBackground(Void... params) {
             try {
-                final String url = "http://ec2-52-78-112-241.ap-northeast-2.compute.amazonaws.com/select_color_list.php";
+                final String url = getString(R.string.server_url) + "/select_color_list.php";
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
                 Color[] colors = restTemplate.getForObject(url, Color[].class);

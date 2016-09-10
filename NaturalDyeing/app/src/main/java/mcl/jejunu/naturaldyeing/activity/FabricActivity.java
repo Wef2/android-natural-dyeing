@@ -1,6 +1,9 @@
 package mcl.jejunu.naturaldyeing.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +19,8 @@ import android.widget.TextView;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.InputStream;
+
 import io.realm.Realm;
 import mcl.jejunu.naturaldyeing.R;
 import mcl.jejunu.naturaldyeing.model.Fabric;
@@ -29,6 +34,8 @@ public class FabricActivity extends AppCompatActivity {
     private Realm realm;
     private Long fabricId;
     private Fabric fabric;
+
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +53,6 @@ public class FabricActivity extends AppCompatActivity {
         descriptionText = (TextView) findViewById(R.id.description_text);
         productButton = (Button) findViewById(R.id.product_button);
 
-        String fabricImageName = "fabric_" + fabricId;
-        int imageId = getResources().getIdentifier(fabricImageName, "drawable", getPackageName());
-        fabricImage.setImageResource(imageId);
-
         productButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -58,6 +61,12 @@ public class FabricActivity extends AppCompatActivity {
                 startActivity(newIntent);
             }
         });
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setIndeterminate(false);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMessage("불러오는 중");
+        progressDialog.setCancelable(false);
 
         new FabricRequestTask().execute();
     }
@@ -85,7 +94,7 @@ public class FabricActivity extends AppCompatActivity {
         @Override
         protected Fabric doInBackground(Void... params) {
             try {
-                final String url = "http://ec2-52-78-112-241.ap-northeast-2.compute.amazonaws.com/select_fabric.php?id=" + fabricId;
+                final String url = getString(R.string.server_url) + "/select_fabric.php?id=" + fabricId;
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
                 Fabric fabric = restTemplate.getForObject(url, Fabric.class);
@@ -102,6 +111,34 @@ public class FabricActivity extends AppCompatActivity {
 
             nameText.setText(fabric.getName());
             descriptionText.setText(fabric.getDescription());
+
+            new ImageTask(fabricImage).execute();
+        }
+    }
+
+    private class ImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView imageView;
+
+        public ImageTask(ImageView imageView) {
+            this.imageView = imageView;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            final String url = getString(R.string.storage_url);
+            Bitmap bitmap = null;
+            try {
+                InputStream in = new java.net.URL(url + fabric.getImage()).openStream();
+                bitmap = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return bitmap;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            imageView.setImageBitmap(result);
+            progressDialog.dismiss();
         }
     }
 

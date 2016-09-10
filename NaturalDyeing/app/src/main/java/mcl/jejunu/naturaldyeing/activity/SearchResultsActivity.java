@@ -13,19 +13,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-import java.util.List;
-
-import io.realm.Case;
-import io.realm.Realm;
-import io.realm.RealmResults;
 import mcl.jejunu.naturaldyeing.R;
 import mcl.jejunu.naturaldyeing.adapter.SearchResultAdapter;
 import mcl.jejunu.naturaldyeing.model.Color;
 import mcl.jejunu.naturaldyeing.model.Resource;
 
 public class SearchResultsActivity extends AppCompatActivity implements SearchView.OnQueryTextListener, View.OnClickListener {
-
-    private Realm realm;
 
     private RecyclerView recyclerView;
     private SearchResultAdapter adapter;
@@ -35,8 +28,6 @@ public class SearchResultsActivity extends AppCompatActivity implements SearchVi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
-
-        realm = Realm.getDefaultInstance();
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);

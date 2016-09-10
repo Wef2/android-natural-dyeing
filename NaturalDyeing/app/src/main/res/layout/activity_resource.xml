@@ -35,14 +35,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left|top"
-                android:text="감태"
+                android:text="이름"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
                 android:id="@+id/scientific_name_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ecklonia cava"
+                android:text="학명"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
 
@@ -53,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
-            android:text="미역과의 갈조류, 제주도를 비롯한 우리나라 남해안에 자생하며 황산화성, 미백, 황노화 기능성이 보고됨."
+            android:text="설명"
             android:textColor="#222222"
             android:textSize="16dp" />
 

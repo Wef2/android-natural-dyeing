@@ -1,6 +1,8 @@
 package mcl.jejunu.naturaldyeing.activity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,18 +13,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import io.realm.Realm;
-import io.realm.RealmResults;
 import mcl.jejunu.naturaldyeing.R;
 import mcl.jejunu.naturaldyeing.adapter.ResourceAdapter;
 import mcl.jejunu.naturaldyeing.model.Resource;
@@ -83,7 +83,7 @@ public class ResourceListActivity extends AppCompatActivity implements View.OnCl
         @Override
         protected List<Resource> doInBackground(Void... params) {
             try {
-                final String url = "http://ec2-52-78-112-241.ap-northeast-2.compute.amazonaws.com/select_resource_list.php";
+                final String url = getString(R.string.server_url) + "/select_resource_list.php";
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
                 Resource[] resources = restTemplate.getForObject(url, Resource[].class);
@@ -100,5 +100,6 @@ public class ResourceListActivity extends AppCompatActivity implements View.OnCl
             adapter.notifyDataSetChanged();
         }
     }
+
 
 }

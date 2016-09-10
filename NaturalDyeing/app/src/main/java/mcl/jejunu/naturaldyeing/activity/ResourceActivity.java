@@ -1,6 +1,9 @@
 package mcl.jejunu.naturaldyeing.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,8 +19,7 @@ import android.widget.TextView;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Arrays;
-import java.util.List;
+import java.io.InputStream;
 
 import mcl.jejunu.naturaldyeing.R;
 import mcl.jejunu.naturaldyeing.model.Resource;
@@ -30,6 +32,8 @@ public class ResourceActivity extends AppCompatActivity implements View.OnClickL
 
     private Long resourceId;
     private Resource resource;
+
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +50,14 @@ public class ResourceActivity extends AppCompatActivity implements View.OnClickL
         colorButton = (Button) findViewById(R.id.color_button);
         fabricButton = (Button) findViewById(R.id.fabric_button);
 
-        String resourceImageName = "resource_" + resourceId;
-        int imageId = getResources().getIdentifier(resourceImageName, "drawable", getPackageName());
-        resourceImage.setImageResource(imageId);
-
         colorButton.setOnClickListener(this);
         fabricButton.setOnClickListener(this);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setIndeterminate(false);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMessage("불러오는 중");
+        progressDialog.setCancelable(false);
 
         new ResourceRequestTask().execute();
     }
@@ -95,9 +101,14 @@ public class ResourceActivity extends AppCompatActivity implements View.OnClickL
     private class ResourceRequestTask extends AsyncTask<Void, Void, Resource> {
 
         @Override
+        protected void onPreExecute(){
+            progressDialog.show();
+        }
+
+        @Override
         protected Resource doInBackground(Void... params) {
             try {
-                final String url = "http://ec2-52-78-112-241.ap-northeast-2.compute.amazonaws.com/select_resource.php?id=" + resourceId;
+                final String url = getString(R.string.server_url) + "/select_resource.php?id=" + resourceId;
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
                 Resource resource = restTemplate.getForObject(url, Resource.class);
@@ -109,11 +120,39 @@ public class ResourceActivity extends AppCompatActivity implements View.OnClickL
         }
 
         @Override
-        protected void onPostExecute(Resource resource) {
+        protected void onPostExecute(Resource result) {
+            resource = result;
             nameText.setText(resource.getName());
             scientificNameText.setText(resource.getScientificName());
             descriptionText.setText(resource.getDescription());
+            new ImageTask(resourceImage).execute();
         }
     }
 
+
+    private class ImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView imageView;
+
+        public ImageTask(ImageView imageView) {
+            this.imageView = imageView;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            final String url = getString(R.string.storage_url);
+            Bitmap bitmap = null;
+            try {
+                InputStream in = new java.net.URL(url + resource.getImage()).openStream();
+                bitmap = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return bitmap;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            imageView.setImageBitmap(result);
+            progressDialog.dismiss();
+        }
+    }
 }
