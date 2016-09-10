@@ -1,17 +1,23 @@
 package mcl.jejunu.naturaldyeing.activity;
 
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
 
 import mcl.jejunu.naturaldyeing.R;
 import mcl.jejunu.naturaldyeing.adapter.SearchResultAdapter;
@@ -24,6 +30,8 @@ public class SearchResultsActivity extends AppCompatActivity implements SearchVi
     private SearchResultAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +43,12 @@ public class SearchResultsActivity extends AppCompatActivity implements SearchVi
         recyclerView.setLayoutManager(layoutManager);
         adapter = new SearchResultAdapter(this);
         recyclerView.setAdapter(adapter);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setIndeterminate(false);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setMessage("불러오는 중");
+        progressDialog.setCancelable(false);
     }
 
     @Override
@@ -84,6 +98,32 @@ public class SearchResultsActivity extends AppCompatActivity implements SearchVi
             Intent intent = new Intent(this, ColorActivity.class);
             intent.putExtra("colorId", color.getId());
             startActivity(intent);
+        }
+    }
+
+    private class SearchTask extends AsyncTask<Void, Void, Color> {
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog.show();
+        }
+
+        @Override
+        protected Color doInBackground(Void... params) {
+            try {
+                final String url = getString(R.string.server_url) + "/search.php";
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+                return null;
+            } catch (Exception e) {
+                Log.e("MainActivity", e.getMessage(), e);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Color result) {
+            progressDialog.dismiss();
         }
     }
 }
