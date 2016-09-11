@@ -19,6 +19,10 @@ import android.view.View;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import mcl.jejunu.naturaldyeing.R;
 import mcl.jejunu.naturaldyeing.adapter.SearchResultAdapter;
 import mcl.jejunu.naturaldyeing.model.Color;
@@ -77,6 +81,7 @@ public class SearchResultsActivity extends AppCompatActivity implements SearchVi
 
     @Override
     public boolean onQueryTextSubmit(String query) {
+        new SearchTask(query).execute();
         return false;
     }
 
@@ -101,7 +106,13 @@ public class SearchResultsActivity extends AppCompatActivity implements SearchVi
         }
     }
 
-    private class SearchTask extends AsyncTask<Void, Void, Color> {
+    private class SearchTask extends AsyncTask<Void, Void, List<Resource>> {
+
+        private String keyword;
+
+        public SearchTask(String keyword){
+            this.keyword = keyword;
+        }
 
         @Override
         protected void onPreExecute() {
@@ -109,12 +120,13 @@ public class SearchResultsActivity extends AppCompatActivity implements SearchVi
         }
 
         @Override
-        protected Color doInBackground(Void... params) {
+        protected List<Resource> doInBackground(Void... params) {
             try {
-                final String url = getString(R.string.server_url) + "/search.php";
+                final String url = getString(R.string.server_url) + "/search.php?keyword="+keyword;
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-                return null;
+                Resource[] resources = restTemplate.getForObject(url, Resource[].class);
+                return Arrays.asList(resources);
             } catch (Exception e) {
                 Log.e("MainActivity", e.getMessage(), e);
             }
@@ -122,7 +134,8 @@ public class SearchResultsActivity extends AppCompatActivity implements SearchVi
         }
 
         @Override
-        protected void onPostExecute(Color result) {
+        protected void onPostExecute(List<Resource> result) {
+            adapter.replaceWith(result, new ArrayList<Color>(), keyword);
             progressDialog.dismiss();
         }
     }
